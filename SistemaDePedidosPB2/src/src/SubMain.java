@@ -6,11 +6,21 @@ import java.util.*;
 
 public class SubMain {
 
+	private static SubMain instance;
 	Scanner teclado=new Scanner(System.in);
 	Restaurant restaurant;
+	private Usuario usuarioLogueado;
 	
-	public SubMain() {
+	private SubMain() {
 		this.restaurant=new Restaurant();
+	}
+	
+	public static SubMain getInstance() {
+		if(instance == null) {
+			instance = new SubMain();
+		}
+		
+		return instance;
 	}
 	
 
@@ -32,7 +42,7 @@ public class SubMain {
 				String password=teclado.next();System.out.println("\n");
 				
 				if (login(nick,password)) {
-					Usuario usuario=devolverUsuario(nick, password);
+					usuarioLogueado =devolverUsuario(nick, password);
 					if (usuario instanceof Cliente) {//si es cliente aparece este menu
 						
 						opcion="1";
