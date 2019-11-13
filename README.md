@@ -2,6 +2,6 @@
 
 ##Integrantes
 - Guerrero Matias - 
-- Ibarrola Emanuel - 
+- Ibarrola Emanuel -38031525 
 - Morinigo Diego - 39374219
 - Pereira Rodrigo - 
