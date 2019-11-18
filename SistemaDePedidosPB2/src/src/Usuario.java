@@ -2,20 +2,20 @@ package src;
 
 import java.util.*;
 
-public class Usuario implements Comparable<Usuario>{
+public class Usuario implements Comparable<Usuario> {
 	private String nick;
 	private String password;
-	private static Integer id=0;
-    private Set<Pedido> listaDePedidos;
-	
-	public Usuario(String nick,String password) {
-		this.nick=nick;
-		this.password=password;
+	private static Integer id = 0;
+	private Set<Pedido> listaDePedidos;
+
+	public Usuario(String nick, String password) {
+		this.nick = nick;
+		this.password = password;
 		this.id++;
-		this.listaDePedidos=new TreeSet<Pedido>();
+		this.listaDePedidos = new TreeSet<Pedido>();
 	}
-	
-	public  static Integer getId() {
+
+	public static Integer getId() {
 		return id;
 	}
 
@@ -47,29 +47,29 @@ public class Usuario implements Comparable<Usuario>{
 	public void agregarPedido(Pedido pedido) {
 		listaDePedidos.add(pedido);
 	}
-	
+
 	public void mostrarPedidos() {
-		Iterator<Pedido> listapedidos= listaDePedidos.iterator();
-		while(listapedidos.hasNext()) {
-			Pedido aux=listapedidos.next();
+		Iterator<Pedido> listapedidos = listaDePedidos.iterator();
+		while (listapedidos.hasNext()) {
+			Pedido aux = listapedidos.next();
 			System.out.println(aux.toString());
 		}
 	}
-	
+
 	public Pedido buscarYDevolverPedidoPorNroDePedido(String nroDePedido) {
-		Iterator<Pedido> listapedidos= listaDePedidos.iterator();
-		while(listapedidos.hasNext()) {
-			Pedido aux=listapedidos.next();
+		Iterator<Pedido> listapedidos = listaDePedidos.iterator();
+		while (listapedidos.hasNext()) {
+			Pedido aux = listapedidos.next();
 			if (aux.getNroDePedido().equals(nroDePedido)) {
 				return aux;
 			}
 		}
 		return null;
 	}
-	
+
 	public void cancelarPedido(String nroDePedido) {
-		Pedido pedido=buscarYDevolverPedidoPorNroDePedido(nroDePedido);
-		if (pedido!=null) {
+		Pedido pedido = buscarYDevolverPedidoPorNroDePedido(nroDePedido);
+		if (pedido != null) {
 			pedido.cancelarPedido();
 		}
 
@@ -80,9 +80,4 @@ public class Usuario implements Comparable<Usuario>{
 		return "Usuario [nick=" + nick + "]";
 	}
 
-	
-	
-	
-	
-	
 }

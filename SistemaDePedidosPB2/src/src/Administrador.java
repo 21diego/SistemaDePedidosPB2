@@ -4,11 +4,11 @@ public class Administrador extends Usuario {
 
 	private String apellido;
 	private String nombre;
-	
+
 	public Administrador(String nick, String password, String nombre, String apellido) {
-		super(nick,password);
-		this.nombre=nombre;
-		this.apellido=apellido;
+		super(nick, password);
+		this.nombre = nombre;
+		this.apellido = apellido;
 	}
 
 	public String getApellido() {
@@ -27,7 +27,4 @@ public class Administrador extends Usuario {
 		this.nombre = nombre;
 	}
 
-	
-	
-	
 }

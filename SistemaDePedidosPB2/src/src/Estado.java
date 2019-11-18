@@ -2,7 +2,5 @@ package src;
 
 public enum Estado {
 
-	ENPROCESO,
-	CANCELADO,
-	ENTREGADO;
+	ENPROCESO, CANCELADO, ENTREGADO;
 }
