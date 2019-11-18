@@ -6,12 +6,12 @@ public class Producto {
 	private String nombre;
 	private String descripcion;
 	private Double precio;
-	
-	public Producto(String nombre,String descripcion,Double precio,Integer numId) {
-	this.nombre=nombre;
-	this.precio=precio;
-	this.descripcion=descripcion;
-	this.id=String.format("P%02d", numId);//permite agregar hasta  99 productos ... 
+
+	public Producto(String nombre, String descripcion, Double precio, Integer numId) {
+		this.nombre = nombre;
+		this.precio = precio;
+		this.descripcion = descripcion;
+		this.id = String.format("P%02d", numId);// permite agregar hasta 99 productos ...
 	}
 
 	public String getId() {
@@ -20,9 +20,8 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return " "+id +"\t\t"+ nombre+"\t\t"+ precio + "\n";
+		return " " + id + "\t\t" + nombre + "\t\t" + precio + "\n";
 	}
-
 
 	public String getNombre() {
 		return nombre;
@@ -90,8 +89,5 @@ public class Producto {
 			return false;
 		return true;
 	}
-
-
-	
 
 }
