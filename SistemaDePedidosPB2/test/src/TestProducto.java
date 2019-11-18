@@ -26,5 +26,4 @@ public class TestProducto {
 		assertTrue(prod.getId().equals(codEspProd));
 		
 	}
-
 }
