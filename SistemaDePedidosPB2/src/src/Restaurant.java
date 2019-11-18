@@ -101,6 +101,17 @@ public class Restaurant {
 		}
 		return null;
 	}
+	
+	public Usuario devolverUsuario(String nick) {
+		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
+		while (listausuario.hasNext()) {
+			Usuario usuario = listausuario.next();
+			if (usuario.getNick().equals(nick)) {
+				return usuario;
+			}
+		}
+		return null;
+	}
 
 	public Producto buscarProductoPorId(String id) {
 		Iterator<Producto> listaproductos = listaDeProductos.iterator();
@@ -208,14 +219,16 @@ public class Restaurant {
 		}
 	}
 
-	public void eliminarUsuarioporNick(String nick1) {
+	public Boolean eliminarUsuarioporNick(String nick1) {
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario aux = listausuario.next();
 			if (aux.getNick().equals(nick1)) {
 				listausuario.remove();
+				return true;
 			}
 		}
+		return false;
 
 	}
 

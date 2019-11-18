@@ -11,17 +11,17 @@ public class Pedido implements Comparable<Pedido> {
 	private Usuario usuario;
 	private Double totalAPagar;
 	private List<Item> listaDeItems = new LinkedList<Item>();
-	private static Integer nroPedido = 0;
+	private static Integer count = 0;
 
 	public Pedido(Integer nroDeMesa, Usuario usuario) {
-
-		this.nroDePedido = String.format("P%05d", nroPedido);// permite generar un codigo de pedido hasta 99.999
+		count++;
+		this.nroDePedido = String.format("P%05d", count);// permite generar un codigo de pedido hasta 99.999
 		this.nroDeMesa = nroDeMesa;
 		this.estado = Estado.ENPROCESO;
 		this.fechaPedido = new Date();
 		this.totalAPagar = 0.0;
 		this.usuario = usuario;
-		this.nroPedido++;
+		
 	}
 
 	public Estado getEstado() {
@@ -83,22 +83,18 @@ public class Pedido implements Comparable<Pedido> {
 	}
 
 	public Double getTotalAPagar() {
-		calcularTotalAPagar();
 		return this.totalAPagar;
 	}
 
-	public void calcularTotalAPagar() {
+	public void calcularTotal(Integer codigo) {
 		Iterator<Item> listadeitems = listaDeItems.iterator();
 		while (listadeitems.hasNext()) {
 			Item item = listadeitems.next();
 			this.totalAPagar += (item.getCantidad() * item.getProducto().getPrecio());
 		}
-		ejecutarTimer();
-	}
-
-	public Double calcularPagoConTarjeta() {
-		calcularTotalAPagar();
-		return this.totalAPagar * 1.15;
+		if(codigo.equals(2)) {
+			this.totalAPagar *= 1.15;
+		}
 	}
 
 	public Usuario getUsuario() {
