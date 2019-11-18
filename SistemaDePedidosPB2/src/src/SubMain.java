@@ -43,7 +43,7 @@ public class SubMain {
 				
 				if (login(nick,password)) {
 					usuarioLogueado =devolverUsuario(nick, password);
-					if (usuario instanceof Cliente) {//si es cliente aparece este menu
+					if (usuarioLogueado instanceof Cliente) {//si es cliente aparece este menu
 						
 						opcion="1";
 						while (!opcion.equals("0")) {
@@ -56,7 +56,7 @@ public class SubMain {
 							String opcion3="";
 							System.out.println("Ingrese el numero de la mesa");
 							Integer nroDeMesa=teclado.nextInt();
-							Pedido pedido=new Pedido(nroDeMesa,usuario);
+							Pedido pedido=new Pedido(nroDeMesa,usuarioLogueado);
 							restaurant.mostrarListaDeProductos();
 							do {
 								System.out.println("Ingrese el ID del producto a pedir y presione Enter");
@@ -74,12 +74,12 @@ public class SubMain {
 							}while(!opcion3.equals("1")&&!opcion3.equals("2"));
 							if (opcion3.equals("1")) {
 								System.out.println("El total a pagar es: "+pedido.getTotalAPagar());
-								usuario.agregarPedido(pedido);
+								usuarioLogueado.agregarPedido(pedido);
 								System.out.println("Recuerde que tiene 10 segundo para cancelar el pedido.");
 								restaurant.ejecutarTimerParaCargarVenta(pedido);
 							} else {
 								System.out.println("El total a pagar es: "+pedido.calcularPagoConTarjeta());
-								usuario.agregarPedido(pedido);
+								usuarioLogueado.agregarPedido(pedido);
 								System.out.println("Recuerde que tiene 10 segundo para cancelar el pedido.");
 								restaurant.ejecutarTimerParaCargarVenta(pedido);
 							}
@@ -87,12 +87,12 @@ public class SubMain {
 							break;
 							
 						case "2":
-							usuario.mostrarPedidos();
+							usuarioLogueado.mostrarPedidos();
 							break;
 						case "3":
 							System.out.println("Ingrese el numero del pedido a cancelar y presione Enter");
 							String nroDePedido=teclado.next();
-							usuario.cancelarPedido(nroDePedido);
+							usuarioLogueado.cancelarPedido(nroDePedido);
 							break;
 						case "5":
 							opcion="0";
@@ -112,7 +112,7 @@ public class SubMain {
 							String opcion3="";
 							System.out.println("Ingrese el numero de la mesa");
 							Integer nroDeMesa=teclado.nextInt();
-							Pedido pedido=new Pedido(nroDeMesa,usuario);
+							Pedido pedido=new Pedido(nroDeMesa,usuarioLogueado);
 							restaurant.mostrarListaDeProductos();
 							do {
 								System.out.println("Ingrese el ID del producto a pedir y presione Enter");
@@ -130,12 +130,12 @@ public class SubMain {
 							}while(!opcion3.equals("1")&&!opcion3.equals("2"));
 							if (opcion3.equals("1")) {
 								System.out.println("El total a pagar es: "+pedido.getTotalAPagar());
-								usuario.agregarPedido(pedido);
+								usuarioLogueado.agregarPedido(pedido);
 								System.out.println("Recuerde que tiene 10 segundo para cancelar el pedido.");
 								restaurant.ejecutarTimerParaCargarVenta(pedido);
 							} else {
 								System.out.println("El total a pagar es: "+pedido.calcularPagoConTarjeta());
-								usuario.agregarPedido(pedido);
+								usuarioLogueado.agregarPedido(pedido);
 								System.out.println("Recuerde que tiene 10 segundo para cancelar el pedido.");
 								restaurant.ejecutarTimerParaCargarVenta(pedido);
 							}
@@ -143,10 +143,10 @@ public class SubMain {
 						case "2":
 							System.out.println("Ingrese el numero del pedido a cancelar y presione Enter");
 							String nroDePedido=teclado.next();
-							usuario.cancelarPedido(nroDePedido);
+							usuarioLogueado.cancelarPedido(nroDePedido);
 							break;
 						case "3":
-							usuario.mostrarPedidos();
+							usuarioLogueado.mostrarPedidos();
 							break;
 						case "4":
 							restaurant.mostrarListaDeVentas();
