@@ -216,12 +216,8 @@ public class Interfaz {
 		System.out.println("Ingrese su apellido: ");
 		String apellido = teclado.next();
 		
-		if (codigo.equals(1)) {
-			return local.registrarCliente(user, pass, nombre, apellido);
-		}
-		else {
-			return local.registrarAdministrador(user, pass, nombre, apellido);
-		}
+		return local.registrarUsuario(codigo,user, pass, nombre, apellido);
+			
 	}
 	
 	private void pantallaRealizarPedido() {

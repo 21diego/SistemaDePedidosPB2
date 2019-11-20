@@ -28,21 +28,21 @@ public class Pedido implements Comparable<Pedido> {
 		return estado;
 	}
 
-	public void ejecutarTimer() {// timer
-		Timer tim = new Timer();
-		TimerTask tarea = new TimerTask() {
-
-			@Override
-			public void run() {
-				if (estado.equals(Estado.ENPROCESO)) {
-					entregarPedido();
-				}
-			}
-		};
-
-		tim.schedule(tarea, 10000);// luego de los 10 seg de realizar el pago si no cancelas el pedido se cambia el
-									// estado a Entregado
-	}
+//	public void ejecutarTimer() {// timer
+//		Timer tim = new Timer();
+//		TimerTask tarea = new TimerTask() {
+//
+//			@Override
+//			public void run() {
+//				if (estado.equals(Estado.ENPROCESO)) {
+//					entregarPedido();
+//				}
+//			}
+//		};
+//
+//		tim.schedule(tarea, 10000);// luego de los 10 seg de realizar el pago si no cancelas el pedido se cambia el
+//									// estado a Entregado
+//	}
 
 	public String getNroDePedido() {
 		return nroDePedido;

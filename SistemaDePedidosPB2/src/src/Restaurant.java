@@ -54,33 +54,49 @@ public class Restaurant {
 		}
 		return false;
 	}
-
-	public boolean registrarAdministrador(String nick, String password, String nombre, String apellido) {
-
-		if (!buscarUsuarioPorNickYPassword(nick, password)) {
-			Usuario usuario = new Administrador(nick, password, nombre, apellido);
+	
+	public Boolean registrarUsuario(Integer codigo, String nick, String password, String nombre, String apellido) {
+		
+		if (!existeUsuario(nick, password)) {
+			Usuario usuario;
+			if (codigo.equals(0)) {
+				usuario = new Administrador(nick, password, nombre, apellido);
+			}
+			else {
+				usuario = new Cliente(nick, password, nombre, apellido);
+			}
 			this.listaDeUsuarios.add(usuario);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean registrarCliente(String nick, String password, String nombre, String apellido) {
-		if (listaDeUsuarios.size() == 0) {
-			Usuario usuario = new Cliente(nick, password, nombre, apellido);
-			listaDeUsuarios.add(usuario);
-			return true;
-		} else {
-			if (!buscarUsuarioPorNickYPassword(nick, password)) {
-				Usuario usuario = new Cliente(nick, password, nombre, apellido);
-				listaDeUsuarios.add(usuario);
-				return true;
-			}
-		}
-		return false;
-	}
+//	public boolean registrarAdministrador(String nick, String password, String nombre, String apellido) {
+//
+//		if (!existeUsuario(nick, password)) {
+//			Usuario usuario = new Administrador(nick, password, nombre, apellido);
+//			this.listaDeUsuarios.add(usuario);
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	public boolean registrarCliente(String nick, String password, String nombre, String apellido) {
+//		if (listaDeUsuarios.size() == 0) {
+//			
+//			listaDeUsuarios.add(usuario);
+//			return true;
+//		} else {
+//			if (!existeUsuario(nick, password)) {
+//				Usuario usuario = new Cliente(nick, password, nombre, apellido);
+//				listaDeUsuarios.add(usuario);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
-	public boolean buscarUsuarioPorNickYPassword(String nick, String password) {
+	public boolean existeUsuario(String nick, String password) {
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario usuario = listausuario.next();
@@ -158,7 +174,7 @@ public class Restaurant {
 	}
 
 	public void generarAdminPorDefecto() {
-		registrarAdministrador("adminDef", "admin", "nombre", "apellido");
+		registrarUsuario(0,"adminDef", "admin", "nombre", "apellido");
 	}
 
 	public void cargarProductosPorDefecto() {
@@ -231,5 +247,7 @@ public class Restaurant {
 		return false;
 
 	}
+
+	
 
 }
