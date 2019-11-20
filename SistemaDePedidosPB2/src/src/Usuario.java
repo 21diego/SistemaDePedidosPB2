@@ -3,20 +3,22 @@ package src;
 import java.util.*;
 
 public class Usuario implements Comparable<Usuario> {
+	private static Integer id = 0;
 	private String nick;
 	private String password;
-	private static Integer id = 0;
+	private Integer idUser;
 	private Set<Pedido> listaDePedidos;
 
-	public Usuario(String nick, String password) {
+	protected Usuario(String nick, String password) {
+		id++;
 		this.nick = nick;
 		this.password = password;
-		this.id++;
+		this.idUser = id;
 		this.listaDePedidos = new TreeSet<Pedido>();
 	}
 
-	public static Integer getId() {
-		return id;
+	public Integer getId() {
+		return this.idUser;
 	}
 
 	public String getNick() {

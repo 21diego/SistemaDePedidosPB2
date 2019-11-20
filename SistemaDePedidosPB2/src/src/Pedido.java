@@ -71,13 +71,14 @@ public class Pedido implements Comparable<Pedido> {
 	public void cargarItem(Producto producto, Integer cantidad) {
 		Item e = new Item(producto, cantidad);
 		this.listaDeItems.add(e);
+		this.totalAPagar += e.getCantidad() * e.getProducto().getPrecio();
 	}
 
 	public String mostrarListaItems() {
 		Iterator<Item> listadeitems = listaDeItems.iterator();
 		while (listadeitems.hasNext()) {
 			Item item = listadeitems.next();
-			return (item.toString());
+			System.out.println(item.toString());
 		}
 		return null;
 	}
@@ -86,12 +87,7 @@ public class Pedido implements Comparable<Pedido> {
 		return this.totalAPagar;
 	}
 
-	public void calcularTotal(Integer codigo) {
-		Iterator<Item> listadeitems = listaDeItems.iterator();
-		while (listadeitems.hasNext()) {
-			Item item = listadeitems.next();
-			this.totalAPagar += (item.getCantidad() * item.getProducto().getPrecio());
-		}
+	public void calcularRecargo(Integer codigo) {
 		if(codigo.equals(2)) {
 			this.totalAPagar *= 1.15;
 		}
@@ -103,8 +99,8 @@ public class Pedido implements Comparable<Pedido> {
 
 	@Override
 	public String toString() {
-		return "" + nroDePedido + "\t" + estado + "\tfecha: " + fechaPedido + "\nItems" + listaDeItems.toString()
-				+ "\nTotal a pagar= " + totalAPagar + "\n\n";
+		return "" + nroDePedido + "\t" + estado + "\tfecha: " + fechaPedido + "\n-----Items-----" + listaDeItems.toString()
+				+ "\n---------------" + "\nTotal a pagar= " + totalAPagar + "\n\n";
 	}
 
 	@Override
@@ -112,4 +108,42 @@ public class Pedido implements Comparable<Pedido> {
 		return this.nroDePedido.compareTo(o.getNroDePedido());
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((fechaPedido == null) ? 0 : fechaPedido.hashCode());
+		result = prime * result + ((nroDePedido == null) ? 0 : nroDePedido.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (fechaPedido == null) {
+			if (other.fechaPedido != null)
+				return false;
+		} else if (!fechaPedido.equals(other.fechaPedido))
+			return false;
+		if (nroDePedido == null) {
+			if (other.nroDePedido != null)
+				return false;
+		} else if (!nroDePedido.equals(other.nroDePedido))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
+
+	
 }

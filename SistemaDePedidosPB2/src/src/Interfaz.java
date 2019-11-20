@@ -69,7 +69,7 @@ public class Interfaz {
 		System.out.print("Ingrese su nombre de usuario: ");
 		String user = teclado.next();
 		System.out.print("Ingrese su contraseña: ");
-		String pass = teclado.next(); //encriptar
+		String pass = teclado.next();
 		String opcion;
 		
 		if(this.local.login(user, pass)) {
@@ -254,11 +254,12 @@ public class Interfaz {
 				+ "1-Efectivo\n"
 				+ "2-Tarjeta de Credito");
 		Integer opcion = teclado.nextInt();
-		pedido.calcularTotal(opcion);
+		pedido.calcularRecargo(opcion);
 		System.out.println("El total a pagar es: " + pedido.getTotalAPagar());
 	}
 
 	private void pantallaVerPedidos() {
+		System.out.println("----Lista de tus Pedidos----");
 		userLogueado.mostrarPedidos();
 	}
 	
