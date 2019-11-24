@@ -3,20 +3,22 @@ package src;
 import java.util.*;
 
 public class Usuario implements Comparable<Usuario> {
+	private static Integer id = 0;
 	private String nick;
 	private String password;
-	private static Integer id = 0;
+	private Integer idUser;
 	private Set<Pedido> listaDePedidos;
 
-	public Usuario(String nick, String password) {
+	protected Usuario(String nick, String password) {
+		id++;
 		this.nick = nick;
 		this.password = password;
-		this.id++;
+		this.idUser = id;
 		this.listaDePedidos = new TreeSet<Pedido>();
 	}
 
-	public static Integer getId() {
-		return id;
+	public Integer getId() {
+		return this.idUser;
 	}
 
 	public String getNick() {
@@ -80,4 +82,37 @@ public class Usuario implements Comparable<Usuario> {
 		return "Usuario [nick=" + nick + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nick == null) ? 0 : nick.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (nick == null) {
+			if (other.nick != null)
+				return false;
+		} else if (!nick.equals(other.nick))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		return true;
+	}
+
+	
+	
 }

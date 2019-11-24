@@ -1,5 +1,8 @@
 package src;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class Restaurant {
@@ -45,46 +48,83 @@ public class Restaurant {
 	}
 
 	public boolean login(String nick, String password) {
+		
+		String passEncriptada = encriptarMD5(password);
+		
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario usuario = listausuario.next();
-			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password)) {
+			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(passEncriptada)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public boolean registrarAdministrador(String nick, String password, String nombre, String apellido) {
-
-		if (!buscarUsuarioPorNickYPassword(nick, password)) {
-			Usuario usuario = new Administrador(nick, password, nombre, apellido);
+	public Boolean registrarUsuario(Integer codigo, String nick, String password, String nombre, String apellido) {
+		
+		String passEncriptada = encriptarMD5(password);
+		
+		if (!existeUsuario(nick, passEncriptada)) {
+			Usuario usuario;
+			if (codigo.equals(0)) {
+				usuario = new Administrador(nick, passEncriptada, nombre, apellido);
+			} else {
+				usuario = new Cliente(nick, passEncriptada, nombre, apellido);
+			}
 			this.listaDeUsuarios.add(usuario);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean registrarCliente(String nick, String password, String nombre, String apellido) {
-		if (listaDeUsuarios.size() == 0) {
-			Usuario usuario = new Cliente(nick, password, nombre, apellido);
-			listaDeUsuarios.add(usuario);
-			return true;
-		} else {
-			if (!buscarUsuarioPorNickYPassword(nick, password)) {
-				Usuario usuario = new Cliente(nick, password, nombre, apellido);
-				listaDeUsuarios.add(usuario);
-				return true;
+	private String encriptarMD5(String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] messageDigest = md.digest(input.getBytes());
+			BigInteger number = new BigInteger(1, messageDigest);
+			String hashtext = number.toString(16);
+
+			while (hashtext.length() < 32) {
+				hashtext = "0" + hashtext;
 			}
+			return hashtext;
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
 		}
-		return false;
 	}
 
-	public boolean buscarUsuarioPorNickYPassword(String nick, String password) {
+//	public boolean registrarAdministrador(String nick, String password, String nombre, String apellido) {
+//
+//		if (!existeUsuario(nick, password)) {
+//			Usuario usuario = new Administrador(nick, password, nombre, apellido);
+//			this.listaDeUsuarios.add(usuario);
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	public boolean registrarCliente(String nick, String password, String nombre, String apellido) {
+//		if (listaDeUsuarios.size() == 0) {
+//			
+//			listaDeUsuarios.add(usuario);
+//			return true;
+//		} else {
+//			if (!existeUsuario(nick, password)) {
+//				Usuario usuario = new Cliente(nick, password, nombre, apellido);
+//				listaDeUsuarios.add(usuario);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
+	public boolean existeUsuario(String nick, String password) {
+		String passEncriptada = encriptarMD5(password);
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario usuario = listausuario.next();
-			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password)) {
+			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(passEncriptada)) {
 				return true;
 			}
 		}
@@ -92,10 +132,22 @@ public class Restaurant {
 	}
 
 	public Usuario devolverUsuario(String nick, String password) {
+		String passEncriptada = encriptarMD5(password);
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario usuario = listausuario.next();
-			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password)) {
+			if (usuario.getNick().equals(nick) && usuario.getPassword().equals(passEncriptada)) {
+				return usuario;
+			}
+		}
+		return null;
+	}
+
+	public Usuario devolverUsuario(String nick) {
+		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
+		while (listausuario.hasNext()) {
+			Usuario usuario = listausuario.next();
+			if (usuario.getNick().equals(nick)) {
 				return usuario;
 			}
 		}
@@ -147,7 +199,7 @@ public class Restaurant {
 	}
 
 	public void generarAdminPorDefecto() {
-		registrarAdministrador("adminDef", "admin", "nombre", "apellido");
+		registrarUsuario(0, "adminDef", "admin", "nombre", "apellido");
 	}
 
 	public void cargarProductosPorDefecto() {
@@ -208,14 +260,16 @@ public class Restaurant {
 		}
 	}
 
-	public void eliminarUsuarioporNick(String nick1) {
+	public Boolean eliminarUsuarioporNick(String nick1) {
 		Iterator<Usuario> listausuario = listaDeUsuarios.iterator();
 		while (listausuario.hasNext()) {
 			Usuario aux = listausuario.next();
 			if (aux.getNick().equals(nick1)) {
 				listausuario.remove();
+				return true;
 			}
 		}
+		return false;
 
 	}
 
